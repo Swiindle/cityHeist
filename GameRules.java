@@ -1,5 +1,14 @@
 public class GameRules
 {
+    // Counts
+    
+    public int grassCount = 0;
+    public int roadCount = 0;
+    public int robberCount = 0;
+    public int copCount = 0;
+    public int buildingCount = 0;
+    
+    // Conditions
     private boolean robberTurn = true;
     //private boolean robberWin = false;
     //private boolean copWin = false;

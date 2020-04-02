@@ -3,8 +3,8 @@ import java.awt.*; // #includes Java Panels
 
 public class Cop extends GameObject
 {
-    public Cop(int n, Square s)
+    public Cop(int n)
     {
-        super(n, s, new ImageIcon("art/cop.png"));
+        super(n, new ImageIcon("art/cop.png"));
     }
 }

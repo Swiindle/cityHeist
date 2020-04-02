@@ -62,6 +62,41 @@ public class Board
             panel.add(button);
         }
         
+        this.readLevelLayout();
+        
         frame.setVisible(true);//making the frame visible
+    }
+    
+    private void readLevelLayout()
+    {
+        for(int i = 0 ; i < LevelLayout.level.length() ; i++)
+        {
+            Square s = squareList.get(i);
+            if(LevelLayout.level.charAt(i) == "0".charAt(0))
+            {
+                s.setGameObject(new Grass(gr.grassCount));
+                gr.grassCount++;
+            }
+            else if(LevelLayout.level.charAt(i) == "1".charAt(0))
+            {
+                s.setGameObject(new Road(gr.roadCount));
+                gr.roadCount++;
+            }
+            else if(LevelLayout.level.charAt(i) == "C".charAt(0))
+            {
+                s.setGameObject(new Cop(gr.copCount));
+                gr.copCount++;
+            }
+            else if(LevelLayout.level.charAt(i) == "R".charAt(0))
+            {
+                s.setGameObject(new Robber(gr.robberCount));
+                gr.robberCount++;
+            }
+            else if(LevelLayout.level.charAt(i) == "B".charAt(0))
+            {
+                s.setGameObject(new Building(gr.buildingCount));
+                gr.buildingCount++;
+            }
+        }
     }
 }

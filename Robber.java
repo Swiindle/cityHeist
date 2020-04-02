@@ -3,8 +3,8 @@ import java.awt.*; // #includes Java Panels
 
 public class Robber extends GameObject
 {
-    public Robber(int n, Square s)
+    public Robber(int n)
     {
-        super(n, s, new ImageIcon("art/robber.png"));
+        super(n, new ImageIcon("art/robber.png"));
     }
 }

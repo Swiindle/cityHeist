@@ -5,12 +5,10 @@ public abstract class GameObject
 {
     private ImageIcon icon;
     private int id;
-    private Square currentSquare;
     
-    public GameObject(int id, Square currentSquare, ImageIcon icon)
+    public GameObject(int id, ImageIcon icon)
     {
         this.id = id;
-        this.currentSquare = currentSquare;
         this.icon = icon;
     }
     

@@ -5,8 +5,8 @@ public class Building extends GameObject
 {
     private boolean robbed = false;
     
-    public Building(int n, Square s)
+    public Building(int n)
     {
-        super(n, s, new ImageIcon("art/building.png"));
+        super(n, new ImageIcon("art/building.png"));
     }
 }

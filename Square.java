@@ -8,7 +8,6 @@ public class Square
     public Square(JButton button)
     {
         this.button = button;
-        button.setIcon(holds.getImageIcon());
     }
     
     public JButton getJButton()
