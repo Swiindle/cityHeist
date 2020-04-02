@@ -2,6 +2,6 @@ public class MainMethod
 {
     public static void main(String args[])
     {
-        Board b = new Board(800,800);
+        Board b = new Board(800,825);
     }
 }

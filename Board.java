@@ -17,7 +17,8 @@ public class Board
     //INSTIANTIATE
     
     private JFrame frame = new JFrame("Game");                  // frame
-    private JPanel panel = new JPanel();                        // panel
+    private JPanel gamePanel = new JPanel();                    // panel 1
+    private JPanel infoPanel = new JPanel();                    // panel 2
     private Dice dice = new Dice();                             // dice
     private GameRules gr = new GameRules();
     private ArrayList<Square> squareList = new ArrayList<>();
@@ -47,22 +48,32 @@ public class Board
     private void open()
     {
         //FRAME
-        frame.setSize(xDimension,yDimension);                   // sets the dimensions of the frame
+        frame.setSize(xDimension,yDimension);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);   // frame closes when close
-        
-        //PANEL
-        frame.setContentPane(panel);                            // connects frame and panel
-        panel.setLayout(new GridLayout(8,8));
-        
+        frame.setResizable(false);
+
+        // GAME PANEL
+        gamePanel.setLayout(new GridLayout(8,8));
         for(int i = 0 ; i < 64 ; i++)
         {
             JButton button = new JButton();
             Square s = new Square(button);
             squareList.add(s);
-            panel.add(button);
+            gamePanel.add(button);
         }
-        
         this.readLevelLayout();
+        frame.add(gamePanel, BorderLayout.CENTER);
+        
+        // INFO PANEL
+        infoPanel.setLayout(new GridLayout(0,3));
+        infoPanel.setBackground(Color.YELLOW);
+        JLabel label1 = new JLabel("TEST1");
+        infoPanel.add(label1);
+        JLabel label2 = new JLabel("TEST2");
+        infoPanel.add(label2);
+        JLabel label3 = new JLabel("TEST3");
+        infoPanel.add(label3);
+        frame.add(infoPanel, BorderLayout.NORTH);
         
         frame.setVisible(true);//making the frame visible
     }
