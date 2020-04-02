@@ -8,7 +8,8 @@ public class Dice implements ActionListener
     private JFrame frame = new JFrame("Dice");                  // frame
     private JPanel panel = new JPanel();                        // panel
     private GridLayout layout = new GridLayout(1,0);
-    private JButton b = new JButton("HELLO");
+    private JButton b = new JButton(new ImageIcon("art/dice.png"));
+
     
     public Dice()
     {
@@ -18,7 +19,8 @@ public class Dice implements ActionListener
     public void open()
     {
         //FRAME
-        frame.setSize(100,100);
+        frame.setSize(100,125);
+        frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);   // frame closes when close
         
         //PANEL
@@ -31,7 +33,7 @@ public class Dice implements ActionListener
     public int roll()
     {
         int x = (int)(Math.random() * 6 + 1);
-        b.setText(Integer.toString(x));
+        b.setIcon(new ImageIcon("art/" + x + "-dice.png"));
         return x;
     }
     
