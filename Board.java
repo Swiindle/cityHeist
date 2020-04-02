@@ -5,21 +5,22 @@
 import javax.swing.*; // #includes JFrame
 import java.awt.*; // #includes Java Panels
 import java.awt.event.*; // #includes action listener
+import java.util.*;
 
 public class Board
 {
     /* INSTANCE VARIABLES ARE LISTED BELOW */
     
-    private int xDimension;                                         // x dimension of the window
-    private int yDimension;                                         // y dimension of the window
+    private int xDimension;                              // x dimension of the window
+    private int yDimension;                              // y dimension of the window
     
     //INSTIANTIATE
     
-    private JFrame frame = new JFrame("Checkers");                  // frame
-    private JPanel panel = new JPanel();                            // panel
-    private GridLayout layout = new GridLayout(8,8);                // gridlayout, 8x8
-    private JButton[] b = new JButton[64];                          // 64 buttons
-    //private Square[] s = new Square[64];                            // 64 Squares
+    private JFrame frame = new JFrame("Game");                  // frame
+    private JPanel panel = new JPanel();                        // panel
+    private Dice dice = new Dice();                             // dice
+    private GameRules gr = new GameRules();
+    private ArrayList<Square> squareList = new ArrayList<>();
     
     /* METHODS ARE LISTED BELOW: */
     
@@ -33,6 +34,7 @@ public class Board
     {
         xDimension = x;
         yDimension = y;
+        this.open();
     }
     
     /*
@@ -42,7 +44,7 @@ public class Board
      * This method initializes: JFrame, JPanel, JButtons and Action Listener. For clarity, this method continues in the 'makeSquaresAndButtons'
      * method.
      */
-    public void open()
+    private void open()
     {
         //FRAME
         frame.setSize(xDimension,yDimension);                   // sets the dimensions of the frame
@@ -50,15 +52,16 @@ public class Board
         
         //PANEL
         frame.setContentPane(panel);                            // connects frame and panel
-        panel.setLayout(layout);                                // connects the panel and the layout
-        //BUTTON & Square
+        panel.setLayout(new GridLayout(8,8));
         
-        //ACTION LISTENER
-        /*for(int i = 0 ; i < 64 ; i++)
+        for(int i = 0 ; i < 64 ; i++)
         {
-            b[i].addActionListener(this);
-        }*/
-        //GO
-        frame.setVisible(true);                                 // makes frame visible
+            JButton button = new JButton();
+            Square s = new Square(button);
+            squareList.add(s);
+            panel.add(button);
+        }
+        
+        frame.setVisible(true);//making the frame visible
     }
 }

@@ -1,44 +1,29 @@
+import javax.swing.*; // #includes JFrame
+
 public class Square
 {
-    private int number;
-    private String holds = "empty";
-    private boolean selected = false;
+    private JButton button;
+    private GameObject holds;
     
-    public Square(int n)
+    public Square(JButton button)
     {
-        number = n;
+        this.button = button;
+        button.setIcon(holds.getImageIcon());
     }
     
-    public int getNumber()
+    public JButton getJButton()
     {
-        return number;
+        return button;
     }
     
-    public void setSquare(String s)
+    public void setGameObject(GameObject go)
     {
-        if(s.equals("empty") == true)
-        {
-            holds = "empty";
-        }
-        else if(s.equals("cop") == true)
-        {
-            holds = "cop";
-        }
-        else if(s.equals("robber") == true)
-        {
-            holds = "robber";
-        }
-        else if(s.equals("building") == true)
-        {
-            holds = "building";
-        }
-        else if(s.equals("path") == true)
-        {
-            holds = "path";
-        }
-        else
-        {
-            System.out.println("set Square not avalible");
-        }
+        holds = go;
+        button.setIcon(go.getImageIcon());
+    }
+    
+    public GameObject getGameObject()
+    {
+        return holds;
     }
 }

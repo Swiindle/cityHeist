@@ -1,42 +1,10 @@
-public class Robber
+import javax.swing.*; // #includes JFrame
+import java.awt.*; // #includes Java Panels
+
+public class Robber extends GameObject
 {
-    private int id;
-    private int currentSquare;
-    private boolean inJail = false;
-    public Robber(int n)
+    public Robber(int n, Square s)
     {
-        id = n;
-    }
-    
-    public int getid()
-    {
-        return id;
-    }
-    
-    public int getSquare()
-    {
-        return currentSquare;
-    }
-    
-    public void changeSquare(int n)
-    {
-        currentSquare = n;
-    }
-    
-    public boolean getInJail()
-    {
-        return inJail;
-    }
-    
-    public void switchInJail()
-    {
-        if(inJail == false)
-        {
-            inJail = true;
-        }
-        else
-        {
-            inJail = false;
-        }
+        super(n, s, new ImageIcon("art/robber.png"));
     }
 }

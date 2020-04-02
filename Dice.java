@@ -10,6 +10,11 @@ public class Dice implements ActionListener
     private GridLayout layout = new GridLayout(1,0);
     private JButton b = new JButton("HELLO");
     
+    public Dice()
+    {
+        this.open();
+    }
+    
     public void open()
     {
         //FRAME
@@ -29,6 +34,7 @@ public class Dice implements ActionListener
         b.setText(Integer.toString(x));
         return x;
     }
+    
     public void actionPerformed(ActionEvent action)
     {
         roll();

@@ -1,25 +1,10 @@
-public class Cop
+import javax.swing.*; // #includes JFrame
+import java.awt.*; // #includes Java Panels
+
+public class Cop extends GameObject
 {
-    private int id;
-    private int currentSquare;
-    
-    public Cop(int n)
+    public Cop(int n, Square s)
     {
-        id = n;
-    }
-    
-    public int getid()
-    {
-        return id;
-    }
-    
-    public int getSquare()
-    {
-        return currentSquare;
-    }
-    
-    public void changeSquare(int n)
-    {
-        currentSquare = n;
+        super(n, s, new ImageIcon("art/cop.png"));
     }
 }

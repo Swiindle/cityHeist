@@ -1,43 +1,12 @@
-public class Building
+import javax.swing.*; // #includes JFrame
+import java.awt.*; // #includes Java Panels
+
+public class Building extends GameObject
 {
-    private int currentSquare;
-    private int id;
     private boolean robbed = false;
     
-    public Building(int n)
+    public Building(int n, Square s)
     {
-        id = n;
-    }
-    
-    public int getid()
-    {
-        return id;
-    }
-    
-    public int getSquare()
-    {
-        return currentSquare;
-    }
-    
-    public void changeSquare(int n)
-    {
-        currentSquare = n;
-    }
-    
-    public boolean getRobbed()
-    {
-        return robbed;
-    }
-    
-    public void switchRobbed()
-    {
-        if(robbed == false)
-        {
-            robbed = true;
-        }
-        else
-        {
-            robbed = false;
-        }
+        super(n, s, new ImageIcon("art/building.png"));
     }
 }
