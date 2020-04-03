@@ -12,7 +12,7 @@ public class GameRules
     public static int copCount = 0;
     public static int buildingCount = 0;
     
-    public final static Square nullSquare = new Square(-1, new JButton());
+    public final static Square nullSquare = new Square(-1, -1, -1, new JButton());
     private Square currentSelectedSquare = nullSquare;
 
     private boolean robberTurn = true;

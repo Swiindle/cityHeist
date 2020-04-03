@@ -58,7 +58,6 @@ public class Road extends GameObject implements Selectable
                 mode = RoadMode.ROADSELECT;
             }
             selected = true;
-            System.out.println("selecting road");
         }
         else
         {
@@ -71,7 +70,6 @@ public class Road extends GameObject implements Selectable
                 mode = RoadMode.ROAD;
             }
             selected = false;
-            System.out.println("unselecting road");
         }
     }
 }

@@ -6,7 +6,7 @@ enum CopMode
     COP, COPSELECT;
 }
 
-public class Cop extends GameObject  implements Selectable
+public class Cop extends GameObject implements Selectable
 {
     public static final ImageIcon cop = new ImageIcon("art/cop.png");
     public static final ImageIcon copSelect = new ImageIcon("art/cop-selected.png");

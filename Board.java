@@ -10,8 +10,11 @@ public class Board implements ActionListener
 {
     /* INSTANCE VARIABLES ARE LISTED BELOW */
     
-    private int xDimension;                              // x dimension of the window
-    private int yDimension;                              // y dimension of the window
+    private static int xDimension;                              // x dimension of the window
+    private static int yDimension;                              // y dimension of the window
+    private final static int xSquares = 8;
+    private final static int ySquares = 8;
+    private final static int totalSquares = xSquares * ySquares;
     
     //INSTIANTIATE
     
@@ -21,7 +24,7 @@ public class Board implements ActionListener
     private Dice dice = new Dice();                             // dice
     private GameRules gr = new GameRules();
     private ArrayList<Square> squareList = new ArrayList<>();
-    //private HashMap<Square,int[]>  squareCoordinates = new HashMap<>();
+    private HashMap<int[],Square> squareCoordinates = new HashMap<>();
     
     /* METHODS ARE LISTED BELOW: */
     
@@ -54,15 +57,27 @@ public class Board implements ActionListener
 
         // GAME PANEL
         gamePanel.setLayout(new GridLayout(8,8));
-        for(int i = 0 ; i < 64 ; i++)
+        int x = 0;
+        int y = 0;
+        for(int i = 0 ; i < totalSquares ; i++)
         {
             JButton button = new JButton();
             button.addActionListener(this);
-            Square s = new Square(i,button);
+            Square s = new Square(i,x,y,button);
             squareList.add(s);
             gamePanel.add(button);
+            
+            //System.out.println("added square " + i + " with coordinates: " + x + " " + y);
+            if(x == 7)
+            {
+                x = -1;
+                y++;
+            }
+            x++;
         }
+        
         this.readLevelLayout();
+        this.configureAdjacentTiles();
         frame.add(gamePanel, BorderLayout.CENTER);
         
         // INFO PANEL
@@ -79,6 +94,9 @@ public class Board implements ActionListener
         frame.setVisible(true);//making the frame visible
     }
     
+    /**
+     * TODO: EXIT WHEN LEVEL SELECT IS TOO LARGE
+     */
     private void readLevelLayout()
     {
         for(int i = 0 ; i < LevelLayout.level.length() ; i++)
@@ -112,26 +130,53 @@ public class Board implements ActionListener
         }
     }
     
+    /**
+     * Configures the adjacent tiles
+     */
+    private void configureAdjacentTiles()
+    {
+        for(Square s1 : squareList)
+        {
+            if(s1.getGameObject() instanceof Selectable)
+            {
+                for(Square s2 : squareList)
+                {
+                    boolean top = (s1.getYPos() == s2.getYPos() -1 && s1.getXPos() == s2.getXPos());
+                    boolean left = (s1.getXPos() == s2.getXPos() -1 && s1.getYPos() == s2.getYPos());
+                    boolean right = (s1.getXPos() == s2.getXPos() +1 && s1.getYPos() == s2.getYPos());
+                    boolean bottom = (s1.getYPos() == s2.getYPos() +1 && s1.getXPos() == s2.getXPos());
+                    if(s2.getGameObject() instanceof Selectable && (top || left || right || bottom))
+                    {
+                        s1.addAdjacent(s2);
+                    }
+                }
+            }
+        }
+    }
+    
     public void actionPerformed(ActionEvent action)
     {
         for(Square s : squareList)
         {
-            if(gr.getSelectedSquare() == gr.nullSquare && s.getJButton() == action.getSource())
+            if(gr.getSelectedSquare() == gr.nullSquare && s.getJButton() == action.getSource() && s.getGameObject() instanceof Selectable)
             {
                 gr.setSelectedSquare(s);
+                for(Square s2 : s.getAdjacentList())
+                {
+                    s2.select();
+                }
                 s.select();
-                System.out.println("Square " + s.getID() + " has been selected");
-                System.out.println("Gamerules " + gr.getSelectedSquare().getID());
             }
             else
             {
-                if(s == gr.getSelectedSquare() && s.getJButton() == action.getSource())
+                if(s == gr.getSelectedSquare() && s.getJButton() == action.getSource() && s.getGameObject() instanceof Selectable)
                 {
                     gr.setSelectedSquare(gr.nullSquare);
+                    for(Square s2 : s.getAdjacentList())
+                    {
+                        s2.select();
+                    }
                     s.select();
-                    
-                    System.out.println("Square " + s.getID() + " has been unselected");
-                    System.out.println("Gamerules " + gr.getSelectedSquare().getID());
                 }
             }
         }
