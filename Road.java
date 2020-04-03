@@ -1,10 +1,77 @@
 import javax.swing.*; // #includes JFrame
 import java.awt.*; // #includes Java Panels
 
-public class Road extends GameObject
+enum RoadMode
 {
+    ROAD, ROADSELECT, COIN, COINSELECT;
+}
+
+public class Road extends GameObject implements Selectable
+{
+    public static final ImageIcon roadNormal = new ImageIcon("art/road.png");
+    public static final ImageIcon roadSelect = new ImageIcon("art/road-select.png");
+    public static final ImageIcon coin = new ImageIcon("art/coin.png");
+    public static final ImageIcon coinSelect = new ImageIcon("art/coin-select.png");
+    
+    private boolean selected;
+    private RoadMode mode;
+    
     public Road(int n)
     {
-        super(n,new ImageIcon("art/road.png"));
+        super(n, roadNormal);
+        mode = RoadMode.ROAD;
+    }
+    
+    public void setMode(RoadMode m)
+    {
+        mode = m;
+    }
+    
+    @Override
+    public ImageIcon getImageIcon()
+    {
+        switch(mode)
+        {
+            default:
+                return roadNormal;
+            case ROAD:
+                return roadNormal;
+            case ROADSELECT:
+                return roadSelect;
+            case COIN:
+                return coin;
+            case COINSELECT:
+                return coinSelect;
+        }
+    }
+    
+    public void select()
+    {
+        if(!selected)
+        {
+            if(mode == RoadMode.COIN)
+            {
+                mode = RoadMode.COINSELECT;
+            }
+            else if(mode == RoadMode.ROAD)
+            {
+                mode = RoadMode.ROADSELECT;
+            }
+            selected = true;
+            System.out.println("here");
+        }
+        else
+        {
+            if(mode == RoadMode.COINSELECT)
+            {
+                mode = RoadMode.COIN;
+            }
+            else if(mode == RoadMode.ROADSELECT)
+            {
+                mode = RoadMode.ROAD;
+            }
+            selected = false;
+            System.out.println("here2@");
+        }
     }
 }

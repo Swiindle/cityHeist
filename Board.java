@@ -1,13 +1,12 @@
 /**
  * This is the Board class. This class is in charge of implementing all types of java swing. And representing a real life checkers board.
  */
-
 import javax.swing.*; // #includes JFrame
 import java.awt.*; // #includes Java Panels
 import java.awt.event.*; // #includes action listener
 import java.util.*;
 
-public class Board
+public class Board implements ActionListener
 {
     /* INSTANCE VARIABLES ARE LISTED BELOW */
     
@@ -22,6 +21,7 @@ public class Board
     private Dice dice = new Dice();                             // dice
     private GameRules gr = new GameRules();
     private ArrayList<Square> squareList = new ArrayList<>();
+    //private HashMap<Square,int[]>  squareCoordinates = new HashMap<>();
     
     /* METHODS ARE LISTED BELOW: */
     
@@ -42,7 +42,7 @@ public class Board
     /**
      * This method opens and initializes all applicable java swing tools.
      *
-     * This method initializes: JFrame, JPanel, JButtons and Action Listener. For clarity, this method continues in the 'makeSquaresAndButtons'
+     * This method initializes: JFrame, JPanel, JButtons and Action Listener.
      * method.
      */
     private void open()
@@ -57,6 +57,7 @@ public class Board
         for(int i = 0 ; i < 64 ; i++)
         {
             JButton button = new JButton();
+            button.addActionListener(this);
             Square s = new Square(button);
             squareList.add(s);
             gamePanel.add(button);
@@ -107,6 +108,17 @@ public class Board
             {
                 s.setGameObject(new Building(gr.buildingCount));
                 gr.buildingCount++;
+            }
+        }
+    }
+    
+    public void actionPerformed(ActionEvent action)
+    {
+        for(Square s : squareList)
+        {
+            if(s.getJButton() == action.getSource())
+            {
+                s.updateButton();
             }
         }
     }

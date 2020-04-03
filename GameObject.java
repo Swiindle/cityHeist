@@ -21,4 +21,9 @@ public abstract class GameObject
     {
         return icon;
     }
+    
+    public void select()
+    {
+        
+    }
 }
