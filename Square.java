@@ -30,17 +30,7 @@ public class Square
     
     public void select()
     {
-        if(holds instanceof Road)
-        {
-            holds.select();
-            button.setIcon(holds.getImageIcon());
-        }
-        else if(holds instanceof Cop)
-        {
-            holds.select();
-            button.setIcon(holds.getImageIcon());
-        }
-        else if(holds instanceof Robber)
+        if(holds instanceof Selectable)
         {
             holds.select();
             button.setIcon(holds.getImageIcon());

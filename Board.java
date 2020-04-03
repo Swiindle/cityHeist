@@ -24,7 +24,6 @@ public class Board implements ActionListener
     private Dice dice = new Dice();                             // dice
     private GameRules gr = new GameRules();
     private ArrayList<Square> squareList = new ArrayList<>();
-    private HashMap<int[],Square> squareCoordinates = new HashMap<>();
     
     /* METHODS ARE LISTED BELOW: */
     
@@ -145,12 +144,22 @@ public class Board implements ActionListener
                     boolean left = (s1.getXPos() == s2.getXPos() -1 && s1.getYPos() == s2.getYPos());
                     boolean right = (s1.getXPos() == s2.getXPos() +1 && s1.getYPos() == s2.getYPos());
                     boolean bottom = (s1.getYPos() == s2.getYPos() +1 && s1.getXPos() == s2.getXPos());
-                    if(s2.getGameObject() instanceof Selectable && (top || left || right || bottom))
+                    boolean all = (top || left || right || bottom);
+                    if(s2.getGameObject() instanceof Selectable && all)
                     {
                         s1.addAdjacent(s2);
                     }
+                    if(s2.getGameObject() instanceof Building && all)
+                    {
+                        Road r = (Road) s1.getGameObject();
+                        r.setCoinMode();
+                    }
                 }
             }
+        }
+        for(Square s : squareList)
+        {
+            s.setGameObject(s.getGameObject());
         }
     }
     

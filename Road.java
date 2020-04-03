@@ -22,9 +22,9 @@ public class Road extends GameObject implements Selectable
         mode = RoadMode.ROAD;
     }
     
-    public void setMode(RoadMode m)
+    public void setCoinMode()
     {
-        mode = m;
+        mode = RoadMode.COIN;
     }
     
     @Override
