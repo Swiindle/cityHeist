@@ -9,7 +9,7 @@ enum CopMode
 public class Cop extends GameObject  implements Selectable
 {
     public static final ImageIcon cop = new ImageIcon("art/cop.png");
-    public static final ImageIcon copSelect = new ImageIcon("art/cop-select.png");
+    public static final ImageIcon copSelect = new ImageIcon("art/cop-selected.png");
     
     private boolean selected = false;
     private CopMode mode;

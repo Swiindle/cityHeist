@@ -58,7 +58,7 @@ public class Board implements ActionListener
         {
             JButton button = new JButton();
             button.addActionListener(this);
-            Square s = new Square(button);
+            Square s = new Square(i,button);
             squareList.add(s);
             gamePanel.add(button);
         }
@@ -116,9 +116,23 @@ public class Board implements ActionListener
     {
         for(Square s : squareList)
         {
-            if(s.getJButton() == action.getSource())
+            if(gr.getSelectedSquare() == gr.nullSquare && s.getJButton() == action.getSource())
             {
-                s.updateButton();
+                gr.setSelectedSquare(s);
+                s.select();
+                System.out.println("Square " + s.getID() + " has been selected");
+                System.out.println("Gamerules " + gr.getSelectedSquare().getID());
+            }
+            else
+            {
+                if(s == gr.getSelectedSquare() && s.getJButton() == action.getSource())
+                {
+                    gr.setSelectedSquare(gr.nullSquare);
+                    s.select();
+                    
+                    System.out.println("Square " + s.getID() + " has been unselected");
+                    System.out.println("Gamerules " + gr.getSelectedSquare().getID());
+                }
             }
         }
     }

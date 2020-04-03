@@ -13,7 +13,7 @@ public class Road extends GameObject implements Selectable
     public static final ImageIcon coin = new ImageIcon("art/coin.png");
     public static final ImageIcon coinSelect = new ImageIcon("art/coin-select.png");
     
-    private boolean selected;
+    private boolean selected = false;
     private RoadMode mode;
     
     public Road(int n)
@@ -58,7 +58,7 @@ public class Road extends GameObject implements Selectable
                 mode = RoadMode.ROADSELECT;
             }
             selected = true;
-            System.out.println("here");
+            System.out.println("selecting road");
         }
         else
         {
@@ -71,7 +71,7 @@ public class Road extends GameObject implements Selectable
                 mode = RoadMode.ROAD;
             }
             selected = false;
-            System.out.println("here2@");
+            System.out.println("unselecting road");
         }
     }
 }

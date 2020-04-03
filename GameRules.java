@@ -1,21 +1,27 @@
+import javax.swing.*; // #includes JFrame
+import java.awt.*; // #includes Java Panels
+
+
 public class GameRules
 {
     // Counts
     
-    public int grassCount = 0;
-    public int roadCount = 0;
-    public int robberCount = 0;
-    public int copCount = 0;
-    public int buildingCount = 0;
+    public static int grassCount = 0;
+    public static int roadCount = 0;
+    public static int robberCount = 0;
+    public static int copCount = 0;
+    public static int buildingCount = 0;
     
-    // Conditions
+    public final static Square nullSquare = new Square(-1, new JButton());
+    private Square currentSelectedSquare = nullSquare;
+
     private boolean robberTurn = true;
     //private boolean robberWin = false;
     //private boolean copWin = false;
     private int numberCaught = 0;
     private int robberMoney = 0;
-    private int maxMoney = 10;
-    private int maxCaught = 4;
+    private final static int maxMoney = 10;
+    private final static int maxCaught = 4;
     
     public void reset()
     {
@@ -24,11 +30,22 @@ public class GameRules
         robberMoney = 0;
     }
     
+    public void setSelectedSquare(Square s)
+    {
+        currentSelectedSquare = s;
+    }
+    
     public boolean getRobberTurn()
     {
         return robberTurn;
     }
     
+    public Square getSelectedSquare()
+    {
+        return currentSelectedSquare;
+    }
+    
+    /**
     public void switchTurn()
     {
         if(robberTurn == true)
@@ -73,5 +90,5 @@ public class GameRules
     public void rob(int n)
     {
         robberMoney+=n;
-    }
+    }*/
 }
