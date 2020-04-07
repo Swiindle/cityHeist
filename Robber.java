@@ -6,7 +6,7 @@ enum RobberMode
     ROBBER, ROBBERSELECT;
 }
 
-public class Robber extends GameObject implements Selectable
+public class Robber extends GameObject implements Selectable, Baddie
 {
     public static final ImageIcon robber = new ImageIcon("art/robber.png");
     public static final ImageIcon robberSelect = new ImageIcon("art/robber-select.png");
@@ -46,5 +46,15 @@ public class Robber extends GameObject implements Selectable
             mode = RobberMode.ROBBER;
             selected = false;
         }
+    }
+    
+    public void captured(GameRules gr)
+    {
+        gr.caught();
+    }
+    
+    public void rob(GameRules gr)
+    {
+        gr.rob(1);
     }
 }

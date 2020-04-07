@@ -58,6 +58,11 @@ public class Square
         return adjacentList;
     }
     
+    public boolean isAdjacentTo(Square s)
+    {
+        return adjacentList.contains(s);
+    }
+    
     public int getXPos()
     {
         return xPos;

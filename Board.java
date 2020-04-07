@@ -21,8 +21,8 @@ public class Board implements ActionListener
     private JFrame frame = new JFrame("Game");                  // frame
     private JPanel gamePanel = new JPanel();                    // panel 1
     private JPanel infoPanel = new JPanel();                    // panel 2
-    private Dice dice = new Dice();                             // dice
     private GameRules gr = new GameRules();
+    private Dice dice = new Dice(gr);                           // dice
     private ArrayList<Square> squareList = new ArrayList<>();
     
     /* METHODS ARE LISTED BELOW: */
@@ -136,7 +136,7 @@ public class Board implements ActionListener
     {
         for(Square s1 : squareList)
         {
-            if(s1.getGameObject() instanceof Selectable)
+            if(s1.getGameObject() instanceof Selectable || s1.getGameObject() instanceof MovetoAble)
             {
                 for(Square s2 : squareList)
                 {
@@ -145,6 +145,7 @@ public class Board implements ActionListener
                     boolean right = (s1.getXPos() == s2.getXPos() +1 && s1.getYPos() == s2.getYPos());
                     boolean bottom = (s1.getYPos() == s2.getYPos() +1 && s1.getXPos() == s2.getXPos());
                     boolean all = (top || left || right || bottom);
+                    
                     if(s2.getGameObject() instanceof Selectable && all)
                     {
                         s1.addAdjacent(s2);
@@ -167,27 +168,56 @@ public class Board implements ActionListener
     {
         for(Square s : squareList)
         {
-            if(gr.getSelectedSquare() == gr.nullSquare && s.getJButton() == action.getSource() && s.getGameObject() instanceof Selectable)
+            if(gr.getCurrentTurn() == TurnMode.ROBBERTURN)
             {
-                gr.setSelectedSquare(s);
-                for(Square s2 : s.getAdjacentList())
+                System.out.println(TurnMode.ROBBERTURN);
+                if(gr.getSelectedSquare() == gr.nullSquare && s.getJButton() == action.getSource() && s.getGameObject() instanceof Selectable && s.getGameObject() instanceof Baddie)
                 {
-                    s2.select();
-                }
-                s.select();
-            }
-            else
-            {
-                if(s == gr.getSelectedSquare() && s.getJButton() == action.getSource() && s.getGameObject() instanceof Selectable)
-                {
-                    gr.setSelectedSquare(gr.nullSquare);
-                    for(Square s2 : s.getAdjacentList())
-                    {
-                        s2.select();
-                    }
+                    System.out.println("selected square " + s.getID());
+                    gr.setSelectedSquare(s);
                     s.select();
+                }
+                else
+                {
+                    if(s == gr.getSelectedSquare() && s.getJButton() == action.getSource())
+                    {
+                        gr.setSelectedSquare(gr.nullSquare);
+                        s.select();
+                    }
+                    else if(s != gr.getSelectedSquare() && gr.getSelectedSquare() != gr.nullSquare && s.getJButton() == action.getSource() && s.getGameObject() instanceof MovetoAble)
+                    {
+                        gr.nextTurn();
+                        gr.getSelectedSquare().select(); // unselect the previous one
+                        gr.setSelectedSquare(gr.nullSquare);
+                        System.out.println("MOVE HERE " + s.getID());
+                    }
+                }
+            }
+            else if(gr.getCurrentTurn() == TurnMode.COPTURN)
+            {
+                System.out.println(TurnMode.COPTURN);
+                if(gr.getSelectedSquare() == gr.nullSquare && s.getJButton() == action.getSource() && s.getGameObject() instanceof Selectable && s.getGameObject() instanceof Goodie)
+                {
+                    gr.setSelectedSquare(s);
+                    s.select();
+                }
+                else
+                {
+                    if(s == gr.getSelectedSquare() && s.getJButton() == action.getSource())
+                    {
+                        gr.setSelectedSquare(gr.nullSquare);
+                        s.select();
+                    }
+                    else if(s != gr.getSelectedSquare() && gr.getSelectedSquare() != gr.nullSquare && s.getJButton() == action.getSource() && s.getGameObject() instanceof MovetoAble)
+                    {
+                        gr.nextTurn();
+                        gr.getSelectedSquare().select(); // unselect the previous one
+                        gr.setSelectedSquare(gr.nullSquare);
+                        System.out.println("MOVE HERE " + s.getID());
+                    }
                 }
             }
         }
+        System.out.println("///");
     }
 }

@@ -6,7 +6,7 @@ enum RoadMode
     ROAD, ROADSELECT, COIN, COINSELECT;
 }
 
-public class Road extends GameObject implements Selectable
+public class Road extends GameObject implements MovetoAble
 {
     public static final ImageIcon roadNormal = new ImageIcon("art/road.png");
     public static final ImageIcon roadSelect = new ImageIcon("art/road-select.png");
@@ -72,4 +72,9 @@ public class Road extends GameObject implements Selectable
             selected = false;
         }
     }
+    
+    public void highlightMove()
+    {}
+    public void moveTo(MovetoAble moa)
+    {}
 }

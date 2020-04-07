@@ -1,6 +1,10 @@
 import javax.swing.*; // #includes JFrame
 import java.awt.*; // #includes Java Panels
 
+enum TurnMode
+{
+    ROBBERTURN,COPTURN;
+}
 
 public class GameRules
 {
@@ -14,30 +18,25 @@ public class GameRules
     
     public final static Square nullSquare = new Square(-1, -1, -1, new JButton());
     private Square currentSelectedSquare = nullSquare;
-
-    private boolean robberTurn = true;
+    
     //private boolean robberWin = false;
     //private boolean copWin = false;
     private int numberCaught = 0;
     private int robberMoney = 0;
+    private TurnMode turn = TurnMode.ROBBERTURN;
     private final static int maxMoney = 10;
     private final static int maxCaught = 4;
     
-    public void reset()
+    /*public void reset()
     {
         robberTurn = true;
         numberCaught = 0;
         robberMoney = 0;
-    }
+    }*/
     
     public void setSelectedSquare(Square s)
     {
         currentSelectedSquare = s;
-    }
-    
-    public boolean getRobberTurn()
-    {
-        return robberTurn;
     }
     
     public Square getSelectedSquare()
@@ -45,19 +44,24 @@ public class GameRules
         return currentSelectedSquare;
     }
     
-    /**
-    public void switchTurn()
+    public TurnMode getCurrentTurn()
     {
-        if(robberTurn == true)
+        return turn;
+    }
+    
+    public void nextTurn()
+    {
+        if(turn == TurnMode.COPTURN)
         {
-            robberTurn = false;
+            turn = TurnMode.ROBBERTURN;
         }
         else
         {
-            robberTurn = true;
+            turn = TurnMode.COPTURN;
         }
+        System.out.println("next turn, turn is now: " + turn);
     }
-    
+    /**
     public boolean copWin()
     {
         if(numberCaught == maxCaught)
@@ -80,7 +84,7 @@ public class GameRules
         {
             return false;
         }
-    }
+    }*/
     
     public void caught()
     {
@@ -90,5 +94,5 @@ public class GameRules
     public void rob(int n)
     {
         robberMoney+=n;
-    }*/
+    }
 }
