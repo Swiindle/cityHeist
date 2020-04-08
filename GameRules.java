@@ -8,7 +8,7 @@ enum TurnMode
 
 public class GameRules
 {
-    // Counts
+    // Counts //
     
     public static int grassCount = 0;
     public static int roadCount = 0;
@@ -16,16 +16,35 @@ public class GameRules
     public static int copCount = 0;
     public static int buildingCount = 0;
     
+    // Constants //
     public final static Square nullSquare = new Square(-1, -1, -1, new JButton());
     private Square currentSelectedSquare = nullSquare;
+    private final static int maxMoney = 10;
+    private final static int maxCaught = 4;
     
+    // Game Rule Variables //
     //private boolean robberWin = false;
     //private boolean copWin = false;
     private int numberCaught = 0;
     private int robberMoney = 0;
     private TurnMode turn = TurnMode.ROBBERTURN;
-    private final static int maxMoney = 10;
-    private final static int maxCaught = 4;
+    
+    // Label Control //
+    
+    JLabel turnTrackerLabel;
+    JLabel copObjectiveLabel;
+    JLabel robberObjectiveLabel;
+    
+    public void setLabels(JLabel turnLabel, JLabel copLabel, JLabel robberLabel)
+    {
+        this.turnTrackerLabel = turnLabel;
+        this.copObjectiveLabel = copLabel;
+        this.robberObjectiveLabel = robberLabel;
+        
+        turnTrackerLabel.setText("Current turn: ROBBERS");
+        copObjectiveLabel.setText("Robbers Caught: 0 / " + robberCount);
+        robberObjectiveLabel.setText("Buildings Robbed: 0 / " + buildingCount);
+    }
     
     /*public void reset()
     {
@@ -54,10 +73,12 @@ public class GameRules
         if(turn == TurnMode.COPTURN)
         {
             turn = TurnMode.ROBBERTURN;
+            turnTrackerLabel.setText("Current turn: ROBBERS");
         }
         else
         {
             turn = TurnMode.COPTURN;
+            turnTrackerLabel.setText("Current turn: COPS");
         }
     }
     /**
@@ -88,10 +109,12 @@ public class GameRules
     public void caught()
     {
         numberCaught++;
+        copObjectiveLabel.setText("Robbers Caught: " + numberCaught +  " / " + robberCount);
     }
     
     public void rob(int n)
     {
         robberMoney+=n;
+        robberObjectiveLabel.setText("Buildings Robbed: " + robberMoney + " / " + buildingCount);
     }
 }

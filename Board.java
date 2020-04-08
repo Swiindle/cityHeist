@@ -82,14 +82,25 @@ public class Board implements ActionListener
         // INFO PANEL
         infoPanel.setLayout(new GridLayout(0,3));
         infoPanel.setBackground(Color.YELLOW);
-        JLabel label1 = new JLabel("TEST1");
-        infoPanel.add(label1);
-        JLabel label2 = new JLabel("TEST2");
-        infoPanel.add(label2);
-        JLabel label3 = new JLabel("TEST3");
-        infoPanel.add(label3);
-        frame.add(infoPanel, BorderLayout.NORTH);
         
+        //JLabel turnTrackerIcon;
+        
+        JLabel turnTrackerLabel = new JLabel("TEST1");
+        infoPanel.add(turnTrackerLabel);
+        
+        //JLabel turnTrackerIcon;
+    
+        JLabel copObjectiveLabel = new JLabel("TEST2");
+        infoPanel.add(copObjectiveLabel);
+        
+        //JLabel turnTrackerIcon;
+        
+        JLabel robberObjectiveLabel = new JLabel("TEST3");
+        infoPanel.add(robberObjectiveLabel);
+        
+        gr.setLabels(turnTrackerLabel,copObjectiveLabel,robberObjectiveLabel);
+        
+        frame.add(infoPanel, BorderLayout.NORTH);
         frame.setVisible(true);//making the frame visible
     }
     

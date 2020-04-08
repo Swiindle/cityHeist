@@ -1,7 +1,7 @@
 public class LevelLayout
 {
     public static final String level =
-    "011111R0" +
+    "0111R1R0" +
     "01000010" +
     "01B00B10" +
     "01000010" +
