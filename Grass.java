@@ -5,6 +5,6 @@ public class Grass extends GameObject
 {
     public Grass()
     {
-        super(new ImageIcon("art/grass.png"));
+        super(new ImageIcon("art/grass.png"),'0');
     }
 }

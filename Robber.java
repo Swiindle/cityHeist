@@ -15,10 +15,9 @@ public class Robber extends GameObject implements Selectable, Baddie
     private int id;
     private RobberMode mode;
     
-    public Robber(int n)
+    public Robber()
     {
-        super(robber);
-        this.id = n;
+        super(robber,'R');
         mode = RobberMode.ROBBER;
     }
     

@@ -1,5 +1,8 @@
 public class LevelLayout
 {
+    /**
+     * 8x8 Format
+     */
     public static final String level =
     "0111R1R0" +
     "01000010" +

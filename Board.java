@@ -5,6 +5,7 @@ import javax.swing.*; // #includes JFrame
 import java.awt.*; // #includes Java Panels
 import java.awt.event.*; // #includes action listener
 import java.util.*;
+import java.io.*;
 
 public class Board implements ActionListener
 {
@@ -109,6 +110,51 @@ public class Board implements ActionListener
      */
     private void readLevelLayout()
     {
+        ArrayList<Character> gameObjectlevelCodes = new ArrayList<>();
+        Hashtable<Character,String> gameObjectHashMap = new Hashtable<>();
+        
+        try
+        {
+            File f = new File("data/GameObjectClasses.txt");
+            Scanner fileReader = new Scanner(f);
+            while(fileReader.hasNextLine())
+            {
+                String className = fileReader.nextLine();
+                GameObject go = (GameObject) Class.forName(className).newInstance();
+                char code = go.getLevelCreatorCode();
+                String gameObjectName = Class.forName(className).getSimpleName();
+                gameObjectlevelCodes.add(code);
+                gameObjectHashMap.put(code,gameObjectName);
+            }
+            
+            for(int i = 0 ; i < LevelLayout.level.length() ; i++)
+            {
+                Square s = squareList.get(i);
+                char levelCode = LevelLayout.level.charAt(i);
+                
+                String gameObjectName = gameObjectHashMap.get(levelCode);
+                GameObject go = (GameObject) Class.forName(gameObjectName).newInstance();
+                if(go instanceof Baddie)
+                {
+                    gr.robberCount++;
+                }
+                if(go instanceof Goodie)
+                {
+                    gr.copCount++;
+                }
+                if(go instanceof Building)
+                {
+                    gr.buildingCount++;
+                }
+                s.setGameObject(go);
+            }
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+
+        /**
         for(int i = 0 ; i < LevelLayout.level.length() ; i++)
         {
             Square s = squareList.get(i);
@@ -122,20 +168,20 @@ public class Board implements ActionListener
             }
             else if(LevelLayout.level.charAt(i) == "C".charAt(0))
             {
-                s.setGameObject(new Cop(gr.copCount));
+                s.setGameObject(new Cop());
                 gr.copCount++;
             }
             else if(LevelLayout.level.charAt(i) == "R".charAt(0))
             {
-                s.setGameObject(new Robber(gr.robberCount));
+                s.setGameObject(new Robber());
                 gr.robberCount++;
             }
             else if(LevelLayout.level.charAt(i) == "B".charAt(0))
             {
-                s.setGameObject(new Building(gr.buildingCount));
+                s.setGameObject(new Building());
                 gr.buildingCount++;
             }
-        }
+        }*/
     }
     
     /**

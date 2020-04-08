@@ -1,0 +1,5 @@
+Building
+Cop
+Robber
+Grass
+Road

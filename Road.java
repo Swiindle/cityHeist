@@ -18,7 +18,7 @@ public class Road extends GameObject implements MovetoAble
     
     public Road()
     {
-        super(roadNormal);
+        super(roadNormal,'1');
         mode = RoadMode.ROAD;
     }
     
