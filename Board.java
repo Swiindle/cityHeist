@@ -25,6 +25,7 @@ public class Board implements ActionListener
     private GameRules gr = new GameRules();
     //private Dice dice = new Dice(gr);                           // dice
     private ArrayList<Square> squareList = new ArrayList<>();
+    private SquareGraph graph = new SquareGraph();
     
     /* METHODS ARE LISTED BELOW: */
     
@@ -75,7 +76,6 @@ public class Board implements ActionListener
             }
             x++;
         }
-        
         this.readLevelLayout();
         this.configureAdjacentTiles();
         frame.add(gamePanel, BorderLayout.CENTER);
@@ -221,6 +221,7 @@ public class Board implements ActionListener
     
     public void actionPerformed(ActionEvent action)
     {
+        int diceValue = 6;
         for(Square s : squareList)
         {
             if(gr.getCurrentTurn() == TurnMode.ROBBERTURN)
@@ -228,7 +229,7 @@ public class Board implements ActionListener
                 if(gr.getSelectedSquare() == gr.nullSquare && s.getJButton() == action.getSource() && s.getGameObject() instanceof Selectable && s.getGameObject() instanceof Baddie)
                 {
                     gr.setSelectedSquare(s);
-                    this.highlightMoves(s);
+                    this.highlightMoves(s,diceValue);
                 }
                 else
                 {
@@ -236,13 +237,13 @@ public class Board implements ActionListener
                     if(s == gr.getSelectedSquare() && s.getJButton() == action.getSource())
                     {
                         gr.setSelectedSquare(gr.nullSquare);
-                        this.highlightMoves(s);
+                        this.highlightMoves(s,diceValue);
                     }
                     // player clicks on a square that is movable to = move to that square
                     else if(s != gr.getSelectedSquare() && gr.getSelectedSquare() != gr.nullSquare && s.getJButton() == action.getSource() && s.getGameObject() instanceof MovetoAble)
                     {
                         gr.nextTurn();
-                        this.highlightMoves(gr.getSelectedSquare()); // unselect the previous one
+                        this.highlightMoves(gr.getSelectedSquare(),diceValue); // unselect the previous one
                         this.moveTiles(gr.getSelectedSquare(),s);
                         gr.setSelectedSquare(gr.nullSquare);
                     }
@@ -253,19 +254,19 @@ public class Board implements ActionListener
                 if(gr.getSelectedSquare() == gr.nullSquare && s.getJButton() == action.getSource() && s.getGameObject() instanceof Selectable && s.getGameObject() instanceof Goodie)
                 {
                     gr.setSelectedSquare(s);
-                    this.highlightMoves(s);
+                    this.highlightMoves(s,diceValue);
                 }
                 else
                 {
                     if(s == gr.getSelectedSquare() && s.getJButton() == action.getSource())
                     {
                         gr.setSelectedSquare(gr.nullSquare);
-                        this.highlightMoves(s);
+                        this.highlightMoves(s,diceValue);
                     }
                     else if(s != gr.getSelectedSquare() && gr.getSelectedSquare() != gr.nullSquare && s.getJButton() == action.getSource() && s.getGameObject() instanceof MovetoAble)
                     {
                         gr.nextTurn();
-                        this.highlightMoves(gr.getSelectedSquare());; // unselect the previous one
+                        this.highlightMoves(gr.getSelectedSquare(),diceValue);; // unselect the previous one
                         this.moveTiles(gr.getSelectedSquare(),s);
                         gr.setSelectedSquare(gr.nullSquare);
                     }
@@ -277,12 +278,11 @@ public class Board implements ActionListener
     /**
     * Assuming that Square s is an instanceof Selectable and s1 is an instance of moveto
     */
-    private void highlightMoves(Square s)
+    private void highlightMoves(Square s, int dice)
     {
-        System.out.println("Square:" + s.getID() + " adjacent list : ");
-        for(Square s1: s.getAdjacentList())
+        ArrayList<Square> movetoAbleList = graph.traverseGraph(s,dice);
+        for(Square s1: movetoAbleList)
         {
-            System.out.println("Square : " + s1.getID());
             s1.select();
         }
         s.select();
