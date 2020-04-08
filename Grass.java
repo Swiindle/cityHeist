@@ -3,8 +3,8 @@ import java.awt.*; // #includes Java Panels
 
 public class Grass extends GameObject
 {
-    public Grass(int n)
+    public Grass()
     {
-        super(n, new ImageIcon("art/grass.png"));
+        super(new ImageIcon("art/grass.png"));
     }
 }

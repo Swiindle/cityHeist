@@ -22,7 +22,7 @@ public class Board implements ActionListener
     private JPanel gamePanel = new JPanel();                    // panel 1
     private JPanel infoPanel = new JPanel();                    // panel 2
     private GameRules gr = new GameRules();
-    private Dice dice = new Dice(gr);                           // dice
+    //private Dice dice = new Dice(gr);                           // dice
     private ArrayList<Square> squareList = new ArrayList<>();
     
     /* METHODS ARE LISTED BELOW: */
@@ -103,13 +103,11 @@ public class Board implements ActionListener
             Square s = squareList.get(i);
             if(LevelLayout.level.charAt(i) == "0".charAt(0))
             {
-                s.setGameObject(new Grass(gr.grassCount));
-                gr.grassCount++;
+                s.setGameObject(new Grass());
             }
             else if(LevelLayout.level.charAt(i) == "1".charAt(0))
             {
-                s.setGameObject(new Road(gr.roadCount));
-                gr.roadCount++;
+                s.setGameObject(new Road());
             }
             else if(LevelLayout.level.charAt(i) == "C".charAt(0))
             {
@@ -146,7 +144,7 @@ public class Board implements ActionListener
                     boolean bottom = (s1.getYPos() == s2.getYPos() +1 && s1.getXPos() == s2.getXPos());
                     boolean all = (top || left || right || bottom);
                     
-                    if(s2.getGameObject() instanceof Selectable && all)
+                    if((s2.getGameObject() instanceof MovetoAble || s2.getGameObject() instanceof Selectable) && all)
                     {
                         s1.addAdjacent(s2);
                     }
@@ -170,54 +168,97 @@ public class Board implements ActionListener
         {
             if(gr.getCurrentTurn() == TurnMode.ROBBERTURN)
             {
-                System.out.println(TurnMode.ROBBERTURN);
                 if(gr.getSelectedSquare() == gr.nullSquare && s.getJButton() == action.getSource() && s.getGameObject() instanceof Selectable && s.getGameObject() instanceof Baddie)
                 {
-                    System.out.println("selected square " + s.getID());
                     gr.setSelectedSquare(s);
-                    s.select();
+                    this.highlightMoves(s);
                 }
                 else
                 {
+                    // the player clicks on the selected square again = go back to normal state
                     if(s == gr.getSelectedSquare() && s.getJButton() == action.getSource())
                     {
                         gr.setSelectedSquare(gr.nullSquare);
-                        s.select();
+                        this.highlightMoves(s);
                     }
+                    // player clicks on a square that is movable to = move to that square
                     else if(s != gr.getSelectedSquare() && gr.getSelectedSquare() != gr.nullSquare && s.getJButton() == action.getSource() && s.getGameObject() instanceof MovetoAble)
                     {
                         gr.nextTurn();
-                        gr.getSelectedSquare().select(); // unselect the previous one
+                        this.highlightMoves(gr.getSelectedSquare()); // unselect the previous one
+                        this.moveTiles(gr.getSelectedSquare(),s);
                         gr.setSelectedSquare(gr.nullSquare);
-                        System.out.println("MOVE HERE " + s.getID());
                     }
                 }
             }
             else if(gr.getCurrentTurn() == TurnMode.COPTURN)
             {
-                System.out.println(TurnMode.COPTURN);
                 if(gr.getSelectedSquare() == gr.nullSquare && s.getJButton() == action.getSource() && s.getGameObject() instanceof Selectable && s.getGameObject() instanceof Goodie)
                 {
                     gr.setSelectedSquare(s);
-                    s.select();
+                    this.highlightMoves(s);
                 }
                 else
                 {
                     if(s == gr.getSelectedSquare() && s.getJButton() == action.getSource())
                     {
                         gr.setSelectedSquare(gr.nullSquare);
-                        s.select();
+                        this.highlightMoves(s);
                     }
                     else if(s != gr.getSelectedSquare() && gr.getSelectedSquare() != gr.nullSquare && s.getJButton() == action.getSource() && s.getGameObject() instanceof MovetoAble)
                     {
                         gr.nextTurn();
-                        gr.getSelectedSquare().select(); // unselect the previous one
+                        this.highlightMoves(gr.getSelectedSquare());; // unselect the previous one
+                        this.moveTiles(gr.getSelectedSquare(),s);
                         gr.setSelectedSquare(gr.nullSquare);
-                        System.out.println("MOVE HERE " + s.getID());
                     }
                 }
             }
         }
-        System.out.println("///");
+    }
+    
+    /**
+    * Assuming that Square s is an instanceof Selectable and s1 is an instance of moveto
+    */
+    private void highlightMoves(Square s)
+    {
+        System.out.println("Square:" + s.getID() + " adjacent list : ");
+        for(Square s1: s.getAdjacentList())
+        {
+            System.out.println("Square : " + s1.getID());
+            s1.select();
+        }
+        s.select();
+    }
+    
+    private void moveTiles(Square a, Square b)
+    {
+        System.out.println("Moving " + a.getID() + " to " + b.getID());
+        a.moveGameObjectToSquare(b);
+        
+        for(Square s1 : squareList)
+        {
+            if(s1.getGameObject() instanceof MovetoAble)
+            {
+                for(Square s2 : squareList)
+                {
+                    boolean top = (s1.getYPos() == s2.getYPos() -1 && s1.getXPos() == s2.getXPos());
+                    boolean left = (s1.getXPos() == s2.getXPos() -1 && s1.getYPos() == s2.getYPos());
+                    boolean right = (s1.getXPos() == s2.getXPos() +1 && s1.getYPos() == s2.getYPos());
+                    boolean bottom = (s1.getYPos() == s2.getYPos() +1 && s1.getXPos() == s2.getXPos());
+                    boolean all = (top || left || right || bottom);
+                    
+                    if(s2.getGameObject() instanceof Building && all)
+                    {
+                        Road r = (Road) s1.getGameObject();
+                        r.setCoinMode();
+                    }
+                }
+            }
+        }
+        for(Square s : squareList)
+        {
+            s.setGameObject(s.getGameObject());
+        }
     }
 }

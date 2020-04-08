@@ -12,11 +12,13 @@ public class Robber extends GameObject implements Selectable, Baddie
     public static final ImageIcon robberSelect = new ImageIcon("art/robber-select.png");
     
     private boolean selected = false;
+    private int id;
     private RobberMode mode;
     
     public Robber(int n)
     {
-        super(n, new ImageIcon("art/robber.png"));
+        super(robber);
+        this.id = n;
         mode = RobberMode.ROBBER;
     }
     

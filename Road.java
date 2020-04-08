@@ -16,9 +16,9 @@ public class Road extends GameObject implements MovetoAble
     private boolean selected = false;
     private RoadMode mode;
     
-    public Road(int n)
+    public Road()
     {
-        super(n, roadNormal);
+        super(roadNormal);
         mode = RoadMode.ROAD;
     }
     
@@ -47,6 +47,11 @@ public class Road extends GameObject implements MovetoAble
     
     public void select()
     {
+        this.highlightMove();
+    }
+    
+    public void highlightMove()
+    {
         if(!selected)
         {
             if(mode == RoadMode.COIN)
@@ -73,8 +78,8 @@ public class Road extends GameObject implements MovetoAble
         }
     }
     
-    public void highlightMove()
-    {}
     public void moveTo(MovetoAble moa)
-    {}
+    {
+        
+    }
 }

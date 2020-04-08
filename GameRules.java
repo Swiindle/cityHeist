@@ -59,7 +59,6 @@ public class GameRules
         {
             turn = TurnMode.COPTURN;
         }
-        System.out.println("next turn, turn is now: " + turn);
     }
     /**
     public boolean copWin()

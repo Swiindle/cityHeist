@@ -13,10 +13,12 @@ public class Cop extends GameObject implements Selectable, Goodie
     
     private boolean selected = false;
     private CopMode mode;
+    private int id;
     
     public Cop(int n)
     {
-        super(n, cop);
+        super(cop);
+        this.id = n;
         mode = CopMode.COP;
     }
     

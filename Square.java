@@ -30,7 +30,12 @@ public class Square
     
     public void select()
     {
-        if(holds instanceof Selectable)
+        if(holds instanceof MovetoAble)
+        {
+            holds.select();
+            button.setIcon(holds.getImageIcon());
+        }
+        else if(holds instanceof Selectable)
         {
             holds.select();
             button.setIcon(holds.getImageIcon());
@@ -71,5 +76,11 @@ public class Square
     public int getYPos()
     {
         return yPos;
+    }
+    
+    public void moveGameObjectToSquare(Square that)
+    {
+        that.setGameObject(this.holds);
+        this.setGameObject(new Road());
     }
 }

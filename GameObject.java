@@ -4,17 +4,10 @@ import java.awt.*; // #includes Java Panels
 public abstract class GameObject
 {
     private ImageIcon icon;
-    private int id;
     
-    public GameObject(int id, ImageIcon icon)
+    public GameObject(ImageIcon icon)
     {
-        this.id = id;
         this.icon = icon;
-    }
-    
-    public int getId()
-    {
-        return id;
     }
     
     public ImageIcon getImageIcon()
