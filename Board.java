@@ -195,20 +195,23 @@ public class Board implements ActionListener
             {
                 for(Square s2 : squareList)
                 {
-                    boolean top = (s1.getYPos() == s2.getYPos() -1 && s1.getXPos() == s2.getXPos());
-                    boolean left = (s1.getXPos() == s2.getXPos() -1 && s1.getYPos() == s2.getYPos());
-                    boolean right = (s1.getXPos() == s2.getXPos() +1 && s1.getYPos() == s2.getYPos());
-                    boolean bottom = (s1.getYPos() == s2.getYPos() +1 && s1.getXPos() == s2.getXPos());
-                    boolean all = (top || left || right || bottom);
-                    
-                    if((s2.getGameObject() instanceof MovetoAble || s2.getGameObject() instanceof Selectable) && all)
+                    if((s2.getGameObject() instanceof MovetoAble || s2.getGameObject() instanceof Selectable) && this.squareAdjacentTo(s1,s2))
                     {
                         s1.addAdjacent(s2);
                     }
-                    if(s2.getGameObject() instanceof Building && all)
+                    if(s2.getGameObject() instanceof Building && this.squareAdjacentTo(s1,s2))
                     {
-                        Road r = (Road) s1.getGameObject();
-                        r.setCoinMode();
+                        Building building = (Building) s2.getGameObject();
+                        if(!building.getRobbed())
+                        {
+                            Road r = (Road) s1.getGameObject();
+                            r.setCoinMode();
+                        }
+                        else
+                        {
+                            Road r = (Road) s1.getGameObject();
+                            r.setNormalMode();
+                        }
                     }
                 }
             }
@@ -221,7 +224,7 @@ public class Board implements ActionListener
     
     public void actionPerformed(ActionEvent action)
     {
-        int diceValue = 6;
+        int diceValue = 1;
         for(Square s : squareList)
         {
             if(gr.getCurrentTurn() == TurnMode.ROBBERTURN)
@@ -240,7 +243,7 @@ public class Board implements ActionListener
                         this.highlightMoves(traverseGraph(s,diceValue),s);
                     }
                     // player clicks on a square that is movable to = move to that square
-                    else if(s != gr.getSelectedSquare() && gr.getSelectedSquare() != gr.nullSquare && s.getJButton() == action.getSource() && traverseGraph(gr.getSelectedSquare(),diceValue).contains(s) && s.getGameObject() instanceof MovetoAble)
+                    else if(s != gr.getSelectedSquare() && gr.getSelectedSquare() != gr.nullSquare && s.getJButton() == action.getSource() && traverseGraph(gr.getSelectedSquare(),diceValue).contains(s) && (s.getGameObject() instanceof MovetoAble || s.getGameObject() instanceof Selectable))
                     {
                         gr.nextTurn();
                         this.highlightMoves(traverseGraph(gr.getSelectedSquare(),diceValue),s); // unselect the previous one
@@ -263,10 +266,10 @@ public class Board implements ActionListener
                         gr.setSelectedSquare(gr.nullSquare);
                         this.highlightMoves(traverseGraph(s,diceValue),s);
                     }
-                    else if(s != gr.getSelectedSquare() && gr.getSelectedSquare() != gr.nullSquare && s.getJButton() == action.getSource() && traverseGraph(gr.getSelectedSquare(),diceValue).contains(s) && s.getGameObject() instanceof MovetoAble)
+                    else if(s != gr.getSelectedSquare() && gr.getSelectedSquare() != gr.nullSquare && s.getJButton() == action.getSource() && traverseGraph(gr.getSelectedSquare(),diceValue).contains(s) && (s.getGameObject() instanceof MovetoAble || s.getGameObject() instanceof Selectable))
                     {
                         gr.nextTurn();
-                        this.highlightMoves(traverseGraph(gr.getSelectedSquare(),diceValue),s);; // unselect the previous one
+                        this.highlightMoves(traverseGraph(gr.getSelectedSquare(),diceValue),s); // unselect the previous one
                         this.moveTiles(gr.getSelectedSquare(),s);
                         gr.setSelectedSquare(gr.nullSquare);
                     }
@@ -300,25 +303,62 @@ public class Board implements ActionListener
     
     private void moveTiles(Square a, Square b)
     {
-        System.out.println("Moving " + a.getID() + " to " + b.getID());
+        //System.out.println("Moving " + a.getID() + " to " + b.getID());
+        
+        if(a.getGameObject() instanceof Baddie && b.getGameObject() instanceof Goodie)
+        {
+            //b.getGameObject().capture(b.getGameObject(),gr);
+            Cop cop = (Cop) b.getGameObject();
+            cop.capture( (Robber) a.getGameObject(),gr);
+        }
+        else if(b.getGameObject() instanceof Baddie && a.getGameObject() instanceof Goodie)
+        {
+            //a.getGameObject().capture(b.getGameObject(),gr);
+            Cop cop = (Cop) a.getGameObject();
+            cop.capture( (Robber) b.getGameObject(),gr);
+        }
+        
+        if(a.getGameObject() instanceof Baddie && b.getGameObject() instanceof Road)
+        {
+            Road r = (Road) b.getGameObject();
+            if(r.getRoadMode() == RoadMode.COIN || r.getRoadMode() == RoadMode.COINSELECT)
+            {
+                //a.getGameObject().rob(gr);
+                Robber rob = (Robber) a.getGameObject();
+                rob.rob(gr);
+                for(Square s : squareList)
+                {
+                    if(s.getGameObject() instanceof Building && this.squareAdjacentTo(s,b))
+                    {
+                        Building building = (Building) s.getGameObject();
+                        building.robBuilding();
+                    }
+                }
+            }
+        }
+        
         a.moveGameObjectToSquare(b);
         b.select();
+        
         for(Square s1 : squareList)
         {
             if(s1.getGameObject() instanceof MovetoAble)
             {
                 for(Square s2 : squareList)
                 {
-                    boolean top = (s1.getYPos() == s2.getYPos() -1 && s1.getXPos() == s2.getXPos());
-                    boolean left = (s1.getXPos() == s2.getXPos() -1 && s1.getYPos() == s2.getYPos());
-                    boolean right = (s1.getXPos() == s2.getXPos() +1 && s1.getYPos() == s2.getYPos());
-                    boolean bottom = (s1.getYPos() == s2.getYPos() +1 && s1.getXPos() == s2.getXPos());
-                    boolean all = (top || left || right || bottom);
-                    
-                    if(s2.getGameObject() instanceof Building && all)
+                    if(s2.getGameObject() instanceof Building && this.squareAdjacentTo(s1,s2))
                     {
-                        Road r = (Road) s1.getGameObject();
-                        r.setCoinMode();
+                        Building building = (Building) s2.getGameObject();
+                        if(!building.getRobbed())
+                        {
+                            Road r = (Road) s1.getGameObject();
+                            r.setCoinMode();
+                        }
+                        else
+                        {
+                            Road r = (Road) s1.getGameObject();
+                            r.setNormalMode();
+                        }
                     }
                 }
             }
@@ -327,5 +367,15 @@ public class Board implements ActionListener
         {
             s.setGameObject(s.getGameObject());
         }
+    }
+    
+    private boolean squareAdjacentTo(Square a, Square b)
+    {
+        boolean top = (a.getYPos() == b.getYPos() -1 && a.getXPos() == b.getXPos());
+        boolean left = (a.getXPos() == b.getXPos() -1 && a.getYPos() == b.getYPos());
+        boolean right = (a.getXPos() == b.getXPos() +1 && a.getYPos() == b.getYPos());
+        boolean bottom = (a.getYPos() == b.getYPos() +1 && a.getXPos() == b.getXPos());
+        boolean all = (top || left || right || bottom);
+        return all;
     }
 }

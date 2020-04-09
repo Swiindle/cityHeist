@@ -26,6 +26,10 @@ public class Road extends GameObject implements MovetoAble
     {
         mode = RoadMode.COIN;
     }
+    public void setNormalMode()
+    {
+        mode = RoadMode.ROAD;
+    }
     
     @Override
     public ImageIcon getImageIcon()
@@ -43,6 +47,11 @@ public class Road extends GameObject implements MovetoAble
             case COINSELECT:
                 return coinSelect;
         }
+    }
+    
+    public RoadMode getRoadMode()
+    {
+        return mode;
     }
     
     public void select()
@@ -76,10 +85,5 @@ public class Road extends GameObject implements MovetoAble
             }
             selected = false;
         }
-    }
-    
-    public void moveTo(MovetoAble moa)
-    {
-        
     }
 }

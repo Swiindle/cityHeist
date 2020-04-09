@@ -9,4 +9,14 @@ public class Building extends GameObject
     {
         super(new ImageIcon("art/building.png"),'B');
     }
+    
+    public void robBuilding()
+    {
+        robbed = true;
+    }
+    
+    public boolean getRobbed()
+    {
+        return robbed;
+    }
 }
