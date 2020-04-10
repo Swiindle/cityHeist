@@ -23,7 +23,7 @@ public class Board implements ActionListener
     private JPanel gamePanel = new JPanel();                    // panel 1
     private JPanel infoPanel = new JPanel();                    // panel 2
     private GameRules gr = new GameRules();
-    //private Dice dice = new Dice(gr);                           // dice
+    private Dice dice = new Dice(this,gr);                           // dice
     private ArrayList<Square> squareList = new ArrayList<>();
     private SquareGraph graph = new SquareGraph();
     
@@ -224,54 +224,57 @@ public class Board implements ActionListener
     
     public void actionPerformed(ActionEvent action)
     {
-        int diceValue = 1;
-        for(Square s : squareList)
+        int diceValue = dice.getRollValue();
+        if(!dice.getDiceMode())
         {
-            if(gr.getCurrentTurn() == TurnMode.ROBBERTURN)
+            for(Square s : squareList)
             {
-                if(gr.getSelectedSquare() == gr.nullSquare && s.getJButton() == action.getSource() && s.getGameObject() instanceof Selectable && s.getGameObject() instanceof Baddie)
+                if(gr.getCurrentTurn() == TurnMode.ROBBERTURN)
                 {
-                    gr.setSelectedSquare(s);
-                    this.highlightMoves(traverseGraph(s,diceValue),s);
-                }
-                else
-                {
-                    // the player clicks on the selected square again = go back to normal state
-                    if(s == gr.getSelectedSquare() && s.getJButton() == action.getSource())
+                    if(gr.getSelectedSquare() == gr.nullSquare && s.getJButton() == action.getSource() && s.getGameObject() instanceof Selectable && s.getGameObject() instanceof Baddie)
                     {
-                        gr.setSelectedSquare(gr.nullSquare);
+                        gr.setSelectedSquare(s);
                         this.highlightMoves(traverseGraph(s,diceValue),s);
                     }
-                    // player clicks on a square that is movable to = move to that square
-                    else if(s != gr.getSelectedSquare() && gr.getSelectedSquare() != gr.nullSquare && s.getJButton() == action.getSource() && traverseGraph(gr.getSelectedSquare(),diceValue).contains(s) && (s.getGameObject() instanceof MovetoAble || s.getGameObject() instanceof Selectable))
+                    else
                     {
-                        gr.nextTurn();
-                        this.highlightMoves(traverseGraph(gr.getSelectedSquare(),diceValue),s); // unselect the previous one
-                        this.moveTiles(gr.getSelectedSquare(),s);
-                        gr.setSelectedSquare(gr.nullSquare);
+                        // the player clicks on the selected square again = go back to normal state
+                        if(s == gr.getSelectedSquare() && s.getJButton() == action.getSource())
+                        {
+                            gr.setSelectedSquare(gr.nullSquare);
+                            this.highlightMoves(traverseGraph(s,diceValue),s);
+                        }
+                        // player clicks on a square that is movable to = move to that square
+                        else if(s != gr.getSelectedSquare() && gr.getSelectedSquare() != gr.nullSquare && s.getJButton() == action.getSource() && traverseGraph(gr.getSelectedSquare(),diceValue).contains(s) && (s.getGameObject() instanceof MovetoAble || s.getGameObject() instanceof Selectable))
+                        {
+                            gr.nextTurn();
+                            this.highlightMoves(traverseGraph(gr.getSelectedSquare(),diceValue),s); // unselect the previous one
+                            this.moveTiles(gr.getSelectedSquare(),s);
+                            gr.setSelectedSquare(gr.nullSquare);
+                        }
                     }
                 }
-            }
-            else if(gr.getCurrentTurn() == TurnMode.COPTURN)
-            {
-                if(gr.getSelectedSquare() == gr.nullSquare && s.getJButton() == action.getSource() && s.getGameObject() instanceof Selectable && s.getGameObject() instanceof Goodie)
+                else if(gr.getCurrentTurn() == TurnMode.COPTURN)
                 {
-                    gr.setSelectedSquare(s);
-                    this.highlightMoves(traverseGraph(s,diceValue),s);
-                }
-                else
-                {
-                    if(s == gr.getSelectedSquare() && s.getJButton() == action.getSource())
+                    if(gr.getSelectedSquare() == gr.nullSquare && s.getJButton() == action.getSource() && s.getGameObject() instanceof Selectable && s.getGameObject() instanceof Goodie)
                     {
-                        gr.setSelectedSquare(gr.nullSquare);
+                        gr.setSelectedSquare(s);
                         this.highlightMoves(traverseGraph(s,diceValue),s);
                     }
-                    else if(s != gr.getSelectedSquare() && gr.getSelectedSquare() != gr.nullSquare && s.getJButton() == action.getSource() && traverseGraph(gr.getSelectedSquare(),diceValue).contains(s) && (s.getGameObject() instanceof MovetoAble || s.getGameObject() instanceof Selectable))
+                    else
                     {
-                        gr.nextTurn();
-                        this.highlightMoves(traverseGraph(gr.getSelectedSquare(),diceValue),s); // unselect the previous one
-                        this.moveTiles(gr.getSelectedSquare(),s);
-                        gr.setSelectedSquare(gr.nullSquare);
+                        if(s == gr.getSelectedSquare() && s.getJButton() == action.getSource())
+                        {
+                            gr.setSelectedSquare(gr.nullSquare);
+                            this.highlightMoves(traverseGraph(s,diceValue),s);
+                        }
+                        else if(s != gr.getSelectedSquare() && gr.getSelectedSquare() != gr.nullSquare && s.getJButton() == action.getSource() && traverseGraph(gr.getSelectedSquare(),diceValue).contains(s) && (s.getGameObject() instanceof MovetoAble || s.getGameObject() instanceof Selectable))
+                        {
+                            gr.nextTurn();
+                            this.highlightMoves(traverseGraph(gr.getSelectedSquare(),diceValue),s); // unselect the previous one
+                            this.moveTiles(gr.getSelectedSquare(),s);
+                            gr.setSelectedSquare(gr.nullSquare);
+                        }
                     }
                 }
             }
@@ -367,6 +370,9 @@ public class Board implements ActionListener
         {
             s.setGameObject(s.getGameObject());
         }
+        
+        dice.roll();
+        dice.setDiceModeTrue();
     }
     
     private boolean squareAdjacentTo(Square a, Square b)

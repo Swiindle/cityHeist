@@ -13,12 +13,16 @@ public class Dice implements ActionListener
     private ImageIcon robberTurn = new ImageIcon("art/robber.png");
     
     private GameRules gr;
-    private boolean diceMode = false;
+    private Board board;
+    private boolean diceMode = true;
+    private int rollValue;
 
     
-    public Dice(GameRules gr)
+    public Dice(Board board,GameRules gr)
     {
+        this.board = board;
         this.gr = gr;
+        this.rollValue = 0;
         this.open();
     }
     
@@ -37,14 +41,13 @@ public class Dice implements ActionListener
         frame.setVisible(true);                                 // makes frame visible
     }
     
-    public int roll()
+    public void roll()
     {
         if(diceMode)
         {
-            int x = (int)(Math.random() * 6 + 1);
-            b.setIcon(new ImageIcon("art/" + x + "-dice.png"));
+            rollValue = (int)(Math.random() * 6 + 1);
+            b.setIcon(new ImageIcon("art/" + rollValue + "-dice.png"));
             diceMode = false;
-            return x;
         }
         else
         {
@@ -56,9 +59,22 @@ public class Dice implements ActionListener
             {
                 b.setIcon(copTurn);
             }
-            diceMode = true;
-            return -1;
         }
+    }
+    
+    public void setDiceModeTrue()
+    {
+        diceMode = true;
+    }
+    
+    public boolean getDiceMode()
+    {
+        return diceMode;
+    }
+    
+    public int getRollValue()
+    {
+        return rollValue;
     }
     
     public void actionPerformed(ActionEvent action)
