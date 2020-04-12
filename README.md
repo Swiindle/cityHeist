@@ -10,6 +10,20 @@ At this point in my O-O understanding career, I have been taught about the follo
 
 Not everything has been implemented yet, but as with every not programming project, not everything should.
 
+## Instalation Guide:
+Note: you will need a Java 8 compiler.
+
+1. Click the clone/download button in GitHub
+2. Open up a terminal of your choice. (E.g Terminal on Linux and OSX)
+3. Type the following: `cd ` (there's a space after cd)
+4. Drag the folder into the terminal and press enter.
+5. Type the following in order:
+```
+javac *.java
+
+java MainMethod
+```
+
 ## How to play the game?
 
 The goal for the Robbers is to rob all the Buildings. They can do this by landing on the coins adjacent to the building.
