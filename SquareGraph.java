@@ -1,12 +1,13 @@
 import java.util.*;
+
+/**
+ * Class that uses a list of Squares and their adjacent Squares to perform a Graph traversal.
+ */
 public class SquareGraph
 {
     private ArrayList<Square> moveableList = new ArrayList<>();
 
-    /**
-     * Traverses the graph to find the squares that are "i" places away from Square s
-     */
-    public void getNode(Square startNode, int i, ArrayList<Square> visitedList)
+    private void getNode(Square startNode, int i, ArrayList<Square> visitedList)
     {
         //System.out.println("Now at Square: " + startNode.getID() + " i: " + i);
         i--;
@@ -38,6 +39,12 @@ public class SquareGraph
         }
     }
     
+    /**
+     * Traverses the graph to find a list squares that are "dice" places away from Square s.
+     * @param start The square that the traversal will start from.
+     * @param dice The integer value that comes from the dice roll.
+     * @return A list of Squares that are "dice" places away from the start Square.
+     */
     public ArrayList<Square> traverseGraph(Square start, int dice)
     {
         moveableList.clear();
@@ -46,6 +53,10 @@ public class SquareGraph
         return moveableList;
     }
     
+    /**
+     * Adds a Square to this list of Squares that have been traversed to.
+     * @param s Square that has been traversed to.
+     */
     public void addMoveableList(Square s)
     {
         if(!moveableList.contains(s))

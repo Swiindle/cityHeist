@@ -6,6 +6,9 @@ enum TurnMode
     ROBBERTURN,COPTURN;
 }
 
+/**
+ * This class contains all the necessary variables and methods that the game may need to have.
+ */
 public class GameRules
 {
     // Counts //
@@ -17,14 +20,14 @@ public class GameRules
     public static int buildingCount = 0;
     
     // Constants //
-    public final static Square nullSquare = new Square(-1, -1, -1, new JButton());
-    private Square currentSelectedSquare = nullSquare;
+    public final static Square nullSquare = new Square(-1, -1, -1, new JButton()); // this square is used as a placeholder when there are no squares selected.
+    private Square currentSelectedSquare = nullSquare; // the current square, which is the nullsquare by default.
     private final static int maxMoney = 10;
     private final static int maxCaught = 4;
     
     // Game Rule Variables //
-    //private boolean robberWin = false;
-    //private boolean copWin = false;
+    private boolean robberWin = false;
+    private boolean copWin = false;
     private int numberCaught = 0;
     private int robberMoney = 0;
     private TurnMode turn = TurnMode.ROBBERTURN;
@@ -81,10 +84,10 @@ public class GameRules
             turnTrackerLabel.setText("Current turn: COPS");
         }
     }
-    /**
+
     public boolean copWin()
     {
-        if(numberCaught == maxCaught)
+        if(numberCaught >= robberCount)
         {
             return true;
         }
@@ -96,7 +99,7 @@ public class GameRules
     
     public boolean robberWin()
     {
-        if(robberMoney > maxMoney)
+        if(robberMoney >= buildingCount)
         {
             return true;
         }
@@ -104,7 +107,7 @@ public class GameRules
         {
             return false;
         }
-    }*/
+    }
     
     public void caught()
     {

@@ -1,12 +1,12 @@
-/**
- * This is the Board class. This class is in charge of implementing all types of java swing. And representing a real life checkers board.
- */
 import javax.swing.*; // #includes JFrame
 import java.awt.*; // #includes Java Panels
 import java.awt.event.*; // #includes action listener
 import java.util.*;
 import java.io.*;
 
+/**
+ * This class represents the game Board, which holds the rules for the game and all of its pieces.
+ */
 public class Board implements ActionListener
 {
     /* INSTANCE VARIABLES ARE LISTED BELOW */
@@ -19,7 +19,13 @@ public class Board implements ActionListener
     
     //INSTIANTIATE
     
-    private JFrame frame = new JFrame("Game");                  // frame
+    private CardLayout gameLayout = new CardLayout();
+    
+    private JPanel mainGame = new JPanel();
+    private JPanel copWinScreen = new JPanel();
+    private JPanel robberWinScreen = new JPanel();
+    
+    private JFrame frame = new JFrame("CityHeist");                  // frame
     private JPanel gamePanel = new JPanel();                    // panel 1
     private JPanel infoPanel = new JPanel();                    // panel 2
     private GameRules gr = new GameRules();
@@ -30,10 +36,10 @@ public class Board implements ActionListener
     /* METHODS ARE LISTED BELOW: */
     
     /**
-     * Constructor.
+     * Constructor. Opens the game when this class is instantiated.
      *
-     * @param the X dimension of the window
-     * @param the Y dimension of the window
+     * @param the X dimension of the game window
+     * @param the Y dimension of the game window
      */
     Board(int x , int y)
     {
@@ -55,9 +61,10 @@ public class Board implements ActionListener
         frame.setSize(xDimension,yDimension);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);   // frame closes when close
         frame.setResizable(false);
-
+        frame.setLayout(gameLayout);
+        
         // GAME PANEL
-        gamePanel.setLayout(new GridLayout(8,8));
+        gamePanel.setLayout(new GridLayout(this.xSquares,this.ySquares));
         int x = 0;
         int y = 0;
         for(int i = 0 ; i < totalSquares ; i++)
@@ -78,7 +85,6 @@ public class Board implements ActionListener
         }
         this.readLevelLayout();
         this.configureAdjacentTiles();
-        frame.add(gamePanel, BorderLayout.CENTER);
         
         // INFO PANEL
         infoPanel.setLayout(new GridLayout(0,3));
@@ -101,7 +107,20 @@ public class Board implements ActionListener
         
         gr.setLabels(turnTrackerLabel,copObjectiveLabel,robberObjectiveLabel);
         
-        frame.add(infoPanel, BorderLayout.NORTH);
+        // THE REST //
+        
+        mainGame.setLayout(new BorderLayout());
+        mainGame.add(gamePanel, BorderLayout.CENTER);
+        mainGame.add(infoPanel, BorderLayout.NORTH);
+        
+        JLabel robberWinText = new JLabel(new ImageIcon("art/robberWinImage.png"));
+        robberWinScreen.add(robberWinText,BorderLayout.CENTER);
+        
+        JLabel copWinText = new JLabel(new ImageIcon("art/copWinImage.png"));
+        copWinScreen.add(copWinText,BorderLayout.CENTER);
+
+        
+        frame.setContentPane(mainGame);
         frame.setVisible(true);//making the frame visible
     }
     
@@ -222,6 +241,10 @@ public class Board implements ActionListener
         }
     }
     
+    /**
+     * This method is called whenever a JButton on the Board is pressed.
+     * @param action The action that called this method.
+     */
     public void actionPerformed(ActionEvent action)
     {
         int diceValue = dice.getRollValue();
@@ -279,6 +302,8 @@ public class Board implements ActionListener
                 }
             }
         }
+        
+        this.checkWin();
     }
     
     /**
@@ -383,5 +408,17 @@ public class Board implements ActionListener
         boolean bottom = (a.getYPos() == b.getYPos() +1 && a.getXPos() == b.getXPos());
         boolean all = (top || left || right || bottom);
         return all;
+    }
+    
+    private void checkWin()
+    {
+        if(gr.copWin())
+        {
+            frame.setContentPane(copWinScreen);
+        }
+        else if(gr.robberWin())
+        {
+            frame.setContentPane(robberWinScreen);
+        }
     }
 }
