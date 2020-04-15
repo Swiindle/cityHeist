@@ -15,7 +15,7 @@ enum CopMode
 public class Cop extends GameObject implements Selectable, Goodie
 {
     private static final ImageIcon cop = new ImageIcon("art/cop.png");
-    private static final ImageIcon copSelect = new ImageIcon("art/cop-selected.png");
+    private static final ImageIcon copSelect = new ImageIcon("art/cop-select.png");
     
     private boolean selected = false;
     private CopMode mode;

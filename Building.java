@@ -13,7 +13,7 @@ public class Building extends GameObject
      */
     public Building()
     {
-        super(new ImageIcon("art/building.png"),'B');
+        super(new ImageIcon("art/building-" + "1" + ".png"),'B');
     }
     
     /**

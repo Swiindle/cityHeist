@@ -11,10 +11,11 @@ public class Board implements ActionListener
 {
     /* INSTANCE VARIABLES ARE LISTED BELOW */
     
-    private static int xDimension;                              // x dimension of the window
-    private static int yDimension;                              // y dimension of the window
-    private final static int xSquares = 8;
-    private final static int ySquares = 8;
+    private final static int boxSize = 50;
+    private final static int xSquares = 10;
+    private final static int ySquares = 13;
+    private static int width = xSquares * boxSize;
+    private static int height = ySquares * boxSize + 40;
     private final static int totalSquares = xSquares * ySquares;
     
     //INSTIANTIATE
@@ -37,14 +38,9 @@ public class Board implements ActionListener
     
     /**
      * Constructor. Opens the game when this class is instantiated.
-     *
-     * @param the X dimension of the game window
-     * @param the Y dimension of the game window
      */
-    Board(int x , int y)
+    public Board()
     {
-        xDimension = x;
-        yDimension = y;
         this.open();
     }
     
@@ -58,13 +54,13 @@ public class Board implements ActionListener
     private void open()
     {
         //FRAME
-        frame.setSize(xDimension,yDimension);
+        frame.setSize(this.width,this.height);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);   // frame closes when close
         frame.setResizable(false);
         frame.setLayout(gameLayout);
         
         // GAME PANEL
-        gamePanel.setLayout(new GridLayout(this.xSquares,this.ySquares));
+        gamePanel.setLayout(new GridLayout(this.ySquares,this.xSquares));
         int x = 0;
         int y = 0;
         for(int i = 0 ; i < totalSquares ; i++)
@@ -76,7 +72,7 @@ public class Board implements ActionListener
             gamePanel.add(button);
             
             //System.out.println("added square " + i + " with coordinates: " + x + " " + y);
-            if(x == 7)
+            if(x == xSquares-1)
             {
                 x = -1;
                 y++;
@@ -129,6 +125,12 @@ public class Board implements ActionListener
      */
     private void readLevelLayout()
     {
+        int levelLayoutErrorSize = xSquares * ySquares;
+        if(levelLayoutErrorSize != LevelLayout.level.length())
+        {
+            System.out.println("Error: Level Layout not correct size");
+            System.exit(1);
+        }
         ArrayList<Character> gameObjectlevelCodes = new ArrayList<>();
         Hashtable<Character,String> gameObjectHashMap = new Hashtable<>();
         
