@@ -1,3 +1,5 @@
+package com.cityheist;
+
 import javax.swing.*; // #includes JFrame
 import java.util.*;
 

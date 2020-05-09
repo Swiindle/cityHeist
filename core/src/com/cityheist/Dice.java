@@ -1,3 +1,5 @@
+package com.cityheist;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*; // #includes action listener

@@ -1,3 +1,5 @@
+package com.cityheist;
+
 /**
  * An interface that all "Good guy" classes should extend. This interface was written for classes extending GameObject in mind.
  */

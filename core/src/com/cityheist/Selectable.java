@@ -1,3 +1,5 @@
+package com.cityheist;
+
 /**
  * This interface is meant for classes which represents a game piece. E.g a Cop. It was written for classes extending GameObject in mind.
  */

@@ -1,3 +1,5 @@
+package com.cityheist;
+
 /**
  * This class contains a String that tells the level loader where to put the different objects in the game.
  * Each charecter in the String represents a game object, i.e 1 = Road and 0 = Grass.
