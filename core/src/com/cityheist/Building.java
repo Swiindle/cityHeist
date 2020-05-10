@@ -1,5 +1,7 @@
 package com.cityheist;
 
+import com.badlogic.gdx.graphics.Texture;
+
 import javax.swing.*; // #includes JFrame
 import java.awt.*; // #includes Java Panels
 
@@ -15,7 +17,7 @@ public class Building extends GameObject
      */
     public Building()
     {
-        super(new ImageIcon("art/building-" + "1" + ".png"),'B');
+        super(new Texture("art/building-" + "1" + ".png"),'B');
     }
     
     /**

@@ -22,7 +22,7 @@ public class GameRules
     public static int buildingCount = 0;
     
     // Constants //
-    public final static Square nullSquare = new Square(-1, -1, -1, new JButton()); // this square is used as a placeholder when there are no squares selected.
+    public final static Square nullSquare = new Square(-1, -1, -1); // this square is used as a placeholder when there are no squares selected.
     private Square currentSelectedSquare = nullSquare; // the current square, which is the nullsquare by default.
     private final static int maxMoney = 10;
     private final static int maxCaught = 4;

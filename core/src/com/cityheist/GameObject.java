@@ -1,24 +1,24 @@
 package com.cityheist;
 
+import com.badlogic.gdx.graphics.Texture;
 import javax.swing.*; // #includes JFrame
-import java.awt.*; // #includes Java Panels
 
 /**
  * Abstract class representing any noun within the game. E.g A Cop would be considered a GameObject.
  */
 public abstract class GameObject
 {
-    private ImageIcon icon;
+    private Texture texture;
     private static char levelCreatorCode;
     
     /**
      * Constructor.
-     * @param icon The Image that this GameObject should have at default.
+     * @param texture The Image that this GameObject should have at default.
      * @param levelCreatorCode A charecter that represents this GameObject, will be used when drawing the level.
      */
-    public GameObject(ImageIcon icon, char levelCreatorCode)
+    public GameObject(Texture texture, char levelCreatorCode)
     {
-        this.icon = icon;
+        this.texture = texture;
         this.levelCreatorCode = levelCreatorCode;
     }
     
@@ -26,9 +26,9 @@ public abstract class GameObject
      * Returns this GameObject's image.
      * @return The GameObject's imageIcon.
      */
-    public ImageIcon getImageIcon()
+    public Texture getImageIcon()
     {
-        return icon;
+        return texture;
     }
     
     /**

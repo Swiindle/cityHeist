@@ -1,5 +1,7 @@
 package com.cityheist;
 
+import com.badlogic.gdx.graphics.Texture;
+
 import javax.swing.*; // #includes JFrame
 import java.awt.*; // #includes Java Panels
 
@@ -13,6 +15,6 @@ public class Grass extends GameObject
      */
     public Grass()
     {
-        super(new ImageIcon("art/grass.png"),'0');
+        super(new Texture("art/grass.png"),'0');
     }
 }

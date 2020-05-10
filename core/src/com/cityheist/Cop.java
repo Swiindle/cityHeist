@@ -1,5 +1,7 @@
 package com.cityheist;
 
+import com.badlogic.gdx.graphics.Texture;
+
 import javax.swing.*; // #includes JFrame
 import java.awt.*; // #includes Java Panels
 
@@ -16,8 +18,8 @@ enum CopMode
  */
 public class Cop extends GameObject implements Selectable, Goodie
 {
-    private static final ImageIcon cop = new ImageIcon("art/cop.png");
-    private static final ImageIcon copSelect = new ImageIcon("art/cop-select.png");
+    private static final Texture cop = new Texture("art/cop.png");
+    private static final Texture copSelect = new Texture("art/cop-select.png");
     
     private boolean selected = false;
     private CopMode mode;
@@ -37,7 +39,7 @@ public class Cop extends GameObject implements Selectable, Goodie
      * @return The ImageIcon that contains the graphic of the Cop.
      */
     @Override
-    public ImageIcon getImageIcon()
+    public Texture getImageIcon()
     {
         switch(mode)
         {

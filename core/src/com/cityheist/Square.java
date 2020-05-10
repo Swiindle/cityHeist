@@ -1,6 +1,5 @@
 package com.cityheist;
 
-import javax.swing.*; // #includes JFrame
 import java.util.*;
 
 /**
@@ -11,7 +10,7 @@ public class Square
     private int id;
     private int xPos;
     private int yPos;
-    private JButton button;
+    //private JButton button;
     private GameObject holds;
     private ArrayList<Square> adjacentList = new ArrayList<>();
     
@@ -20,14 +19,13 @@ public class Square
      * @param id An integer value representing this Square's id value.
      * @param x An integer value representing this Square's x coordinate on the board.
      * @param y An integer value representing this Square's y coordinate on the board.
-     * @param button The JButton that graphically represents this Square.
      */
-    public Square(int id, int x, int y, JButton button)
+    public Square(int id, int x, int y)
     {
         this.id = id;
         this.xPos = x;
         this.yPos = y;
-        this.button = button;
+        //this.button = button;
     }
     
     /**
@@ -43,11 +41,12 @@ public class Square
      * A method that returns this Square's JButton.
      * @return This Square's JButton.
      */
+    /*
     public JButton getJButton()
     {
         return button;
     }
-    
+    */
     /**
      * This method toggles the selection / deselection of the GameObject that it is holding.
      */
@@ -56,12 +55,12 @@ public class Square
         if(holds instanceof MovetoAble)
         {
             holds.select();
-            button.setIcon(holds.getImageIcon());
+            //button.setIcon(holds.getImageIcon());
         }
         else if(holds instanceof Selectable)
         {
             holds.select();
-            button.setIcon(holds.getImageIcon());
+            //button.setIcon(holds.getImageIcon());
         }
     }
     
@@ -72,7 +71,7 @@ public class Square
     public void setGameObject(GameObject go)
     {
         holds = go;
-        button.setIcon(go.getImageIcon());
+        //button.setIcon(go.getImageIcon());
     }
     
     /**

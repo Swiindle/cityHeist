@@ -1,5 +1,7 @@
 package com.cityheist;
 
+import com.badlogic.gdx.graphics.Texture;
+
 import javax.swing.*; // #includes JFrame
 import java.awt.*; // #includes Java Panels
 
@@ -13,8 +15,8 @@ enum RobberMode
  */
 public class Robber extends GameObject implements Selectable, Baddie
 {
-    public static final ImageIcon robber = new ImageIcon("art/robber.png");
-    public static final ImageIcon robberSelect = new ImageIcon("art/robber-select.png");
+    public static final Texture robber = new Texture("art/robber.png");
+    public static final Texture robberSelect = new Texture("art/robber-select.png");
     
     private boolean selected = false;
     private int id;
@@ -35,7 +37,7 @@ public class Robber extends GameObject implements Selectable, Baddie
      * @return The ImageIcon that contains the graphic of the cop's state
      */
     @Override
-    public ImageIcon getImageIcon()
+    public Texture getImageIcon()
     {
         switch(mode)
         {

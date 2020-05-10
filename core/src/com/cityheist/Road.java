@@ -1,5 +1,7 @@
 package com.cityheist;
 
+import com.badlogic.gdx.graphics.Texture;
+
 import javax.swing.*; // #includes JFrame
 import java.awt.*; // #includes Java Panels
 
@@ -13,10 +15,10 @@ enum RoadMode
  */
 public class Road extends GameObject implements MovetoAble
 {
-    public static final ImageIcon roadNormal = new ImageIcon("art/road.png");
-    public static final ImageIcon roadSelect = new ImageIcon("art/road-select.png");
-    public static final ImageIcon coin = new ImageIcon("art/coin.png");
-    public static final ImageIcon coinSelect = new ImageIcon("art/coin-select.png");
+    public static final Texture roadNormal = new Texture("art/road.png");
+    public static final Texture roadSelect = new Texture("art/road-select.png");
+    public static final Texture coin = new Texture("art/coin.png");
+    public static final Texture coinSelect = new Texture("art/coin-select.png");
     
     private boolean selected = false;
     private RoadMode mode;
@@ -52,7 +54,7 @@ public class Road extends GameObject implements MovetoAble
      * @return The ImageIcon that contains the graphic of the road.
      */
     @Override
-    public ImageIcon getImageIcon()
+    public Texture getImageIcon()
     {
         switch(mode)
         {
